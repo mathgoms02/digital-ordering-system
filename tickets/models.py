@@ -9,10 +9,10 @@ class Ticket(models.Model):
     ]
 
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
-    table = models.CharField(max_length=10)
-    client_name = models.CharField(max_length=255)
-    client_phone = models.CharField(max_length=20) # TODO: Adicionar validator regexp
-    observation = models.CharField(max_length=255)
+    table = models.CharField(max_length=10, null=True, blank=True)
+    client_name = models.CharField(max_length=255, null=True, blank=True)
+    client_phone = models.CharField(max_length=20, null=True, blank=True) # TODO: Adicionar validator regexp
+    observation = models.TextField(max_length=255, null=True, blank=True)
     # bartender = models.ForeignKey(Users, on_delete=models.CASCADE) TODO: Create Model User
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -20,5 +20,5 @@ class Ticket(models.Model):
 class TicketItem(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
+    quantity = models.PositiveIntegerField()
     unit_value = models.DecimalField(max_digits=19, decimal_places=2)
