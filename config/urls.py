@@ -17,9 +17,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from rest_framework.routers import DefaultRouter
+
+from tickets.views import TicketItemViewSet, TicketViewSet
+from products.views import ProductViewSet
+
+
+router = DefaultRouter()
+
+router.register(r'products', ProductViewSet, basename='product')
+router.register(r'tickets', TicketViewSet, basename='ticket')
+router.register(r'tickets-item', TicketItemViewSet, basename='ticket-item')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('products.urls')),
-    path('api/', include('tickets.urls'))
+    path('api/', include(router.urls))
     # path('api/users/', include('users.urls')),
 ]
