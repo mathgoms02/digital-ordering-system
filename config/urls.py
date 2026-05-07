@@ -14,23 +14,30 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
 
 from rest_framework.routers import DefaultRouter
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 from tickets.views import TicketItemViewSet, TicketViewSet
 from products.views import ProductViewSet
 
-
 router = DefaultRouter()
 
-router.register(r'products', ProductViewSet, basename='product')
-router.register(r'tickets', TicketViewSet, basename='ticket')
-router.register(r'tickets-item', TicketItemViewSet, basename='ticket-item')
+router.register(r"products", ProductViewSet, basename="product")
+router.register(r"tickets", TicketViewSet, basename="ticket")
+router.register(r"tickets-item", TicketItemViewSet, basename="ticket-item")
+# path('api/users/', include('users.urls')),
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include(router.urls))
-    # path('api/users/', include('users.urls')),
+    path("admin/", admin.site.urls),
+    path("api/", include(router.urls)),
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    # path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'), # Apenas para verificar se token existe ou não
 ]

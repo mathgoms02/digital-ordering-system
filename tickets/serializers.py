@@ -13,7 +13,7 @@ class TicketItemSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-    # Função precida ter o nome da FK para chamar dado da outra tabela
+    # Função precisa ter o nome da FK para chamar dado da outra tabela
     def validate_ticket(self, value):
         if value.status == "C":
             raise serializers.ValidationError("Comanda já fechada!")
