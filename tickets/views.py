@@ -6,9 +6,11 @@ from .serializers import TicketSerializer, TicketItemSerializer
 
 # Create your views here.
 class TicketViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
+    # Pesquisar para apenas o bartender responsável conseguir ver a comanda
+    # queryset = Ticket.objects.filter(bartender=requests.user)
 
     queryset = Ticket.objects.all()
+    permission_classes = (IsAuthenticated,)
     serializer_class = TicketSerializer
 
     # Salvando bartender pelo Token (login)
