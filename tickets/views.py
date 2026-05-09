@@ -11,6 +11,10 @@ class TicketViewSet(viewsets.ModelViewSet):
     queryset = Ticket.objects.all()
     serializer_class = TicketSerializer
 
+    # Salvando bartender pelo Token (login)
+    def perform_create(self, serializer):
+        serializer.save(bartender=self.request.user)
+
 
 class TicketItemViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
