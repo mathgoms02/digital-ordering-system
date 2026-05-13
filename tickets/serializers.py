@@ -16,7 +16,15 @@ class TicketItemSerializer(serializers.ModelSerializer):
         read_only_fields = ["unit_value"]
 
     # Função precisa ter o nome da FK para chamar dado da outra tabela
-    def validate_ticket(self, value):
-        if value.status == "C":
-            raise serializers.ValidationError("Comanda já fechada!")
-        return value
+    # def validate_ticket(self, value):
+    #     if value.status == "C":
+    #         raise serializers.ValidationError("Comanda já fechada!")
+    #     return value
+
+    def validate(self, attrs):
+        ticket = attrs.get("ticket")
+
+        if ticket and ticket.status == "C":
+            raise serializers.ValidationError({"ticket": "Comanda já fechada!"})
+
+        return attrs

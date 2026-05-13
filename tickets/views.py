@@ -13,6 +13,13 @@ class TicketViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = TicketSerializer
 
+    def get_queryset(self):
+        logged_user = self.request.user
+
+        if logged_user.groups.filter(name="admin").exists() or logged_user.is_superuser:
+            return Ticket.objects.all()
+        return Ticket.objects.filter(bartender=logged_user)
+
     # Salvando bartender pelo Token (login)
     def perform_create(self, serializer):
         serializer.save(bartender=self.request.user)
