@@ -26,6 +26,4 @@ class TicketItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     # unit_value = models.DecimalField(max_digits=19, decimal_places=2)
-    unit_value = models.DecimalField(
-        Product.unit_value, max_digits=19, decimal_places=2
-    )
+    unit_value = models.DecimalField(max_digits=19, decimal_places=2)
