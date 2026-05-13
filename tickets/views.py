@@ -23,3 +23,7 @@ class TicketItemViewSet(viewsets.ModelViewSet):
 
     queryset = TicketItem.objects.all()
     serializer_class = TicketItemSerializer
+
+    def perform_create(self, serializer):
+        selected_product = serializer.validated_data.get("product")
+        serializer.save(unit_value=selected_product.unit_value)
